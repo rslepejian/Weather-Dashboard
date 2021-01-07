@@ -91,16 +91,27 @@ $(document).ready(function () {
                 newBtn.attr("id", weatherObjects[weatherObjects.length-1]);
                 newBtn.text(weatherObjects[weatherObjects.length-1].name);
                 $("#button-div").append(newBtn);
-
-                
-
             });
 
 
     });
 
+    // when a city name button is clicked
+    $(".btn-outline-secondary").on("click", function (event) {
+        event.preventDefault();
+        // stores the buttons numeric id in a temp variable
+        var tempId = $(this).attr("id");
+        // renders the weather from the object with an index in the array equal to the buttons id
+        renderWeather(weatherObjects[tempId]);
+    });
+
     // function to render info for a city
     function renderWeather(weatherElem){
+        // empty currentcast and 5daycast
+        $("#current-cast").empty();
+        $("#five-day-cast").empty();
+
+        
 
     }
 
