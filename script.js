@@ -54,13 +54,13 @@ $(document).ready(function () {
                     // dates
                     dates: [response.list[0]["dt_txt"], response.list[7]["dt_txt"], response.list[15]["dt_txt"],response.list[23]["dt_txt"],response.list[31]["dt_txt"],response.list[39]["dt_txt"]],
                     // temps
-                    temps: [],
+                    temps: [response.list[0].main.temp, response.list[7].main.temp, response.list[15].main.temp,response.list[23].main.temp,response.list[31].main.temp,response.list[39].main.temp],
                     // windspeed
-                    winds: [],
+                    winds: [response.list[0].wind.speed, response.list[7].wind.speed, response.list[15].wind.speed,response.list[23].wind.speed,response.list[31].wind.speed,response.list[39].wind.speed],
                     // icons
-                    icons: [],
+                    icons: [response.list[0].weather[0].icon, response.list[7].weather[0].icon, response.list[15].weather[0].icon,response.list[23].weather[0].icon,response.list[31].weather[0].icon,response.list[39].weather[0].icon],
                     // humidity
-                    humiditys: [],
+                    humiditys: [response.list[0].main.humidity, response.list[7].main.humidity, response.list[15].main.humidity,response.list[23].main.humidity,response.list[31].main.humidity,response.list[39].main.humidity],
                     // uv
                     uv : 0
                 };
@@ -80,15 +80,14 @@ $(document).ready(function () {
                     .then(function (response) {
                         // set uv in the last object in weatherObjects to uv from api call
                         weatherObjects[weatherObjects.length - 1].uv = response.current.uvi;
+                        // render, it's here to make sure it doesn't render before we have got the uv value
+                        renderWeather(weatherObjects[weatherObjects.length-1]);
                     });
-                console.log(weatherObjects[weatherObjects.length-1]);
-                // render
-                renderWeather(weatherObjects[weatherObjects.length-1]);
                 // create button and add it to search column in #button-div
                 var newBtn = $("<button>");
                 newBtn.attr("type", "button");
-                newBtn.attr("class", "btn btn-outline-secondary");
-                newBtn.attr("id", weatherObjects[weatherObjects.length-1]);
+                newBtn.attr("class", "btn btn-outline-secondary city-button");
+                newBtn.attr("id", weatherObjects.length-1);
                 newBtn.text(weatherObjects[weatherObjects.length-1].name);
                 $("#button-div").append(newBtn);
             });
@@ -96,8 +95,9 @@ $(document).ready(function () {
 
     });
 
+
     // when a city name button is clicked
-    $(".btn-outline-secondary").on("click", function (event) {
+    $(document).on("click", ".city-button", function (event) {
         event.preventDefault();
         // stores the buttons numeric id in a temp variable
         var tempId = $(this).attr("id");
@@ -111,7 +111,87 @@ $(document).ready(function () {
         $("#current-cast").empty();
         $("#five-day-cast").empty();
 
-        
+        var iconURL = "http://openweathermap.org/img/w/" + weatherElem.icons[0] + ".png";
+
+        // add content to current cast
+        // header contains city name, date and an icon
+        var tempDate = "";
+        // reformatting the date
+        for (var i = 0; i < 10; i++){
+            if (weatherElem.dates[0][i] == "-") {
+                tempDate += "/";
+            }
+            else {
+                tempDate += weatherElem.dates[0][i];
+            }
+        }
+        // creating header element
+        var header = $("<h3>");
+        // adding name and date
+        header.text(weatherElem.name + " (" + tempDate + ")" );
+
+        // creating img element
+        var icon = $("<img>");
+        // making it inline with text
+        icon.attr("class", "inline");
+        // adding icon img source
+        icon.attr("src", iconURL);
+        // adding css styling
+        icon.addClass("icon");
+        // putting it into the header
+        header.append(icon);
+
+        // adding header to page
+        $("#current-cast").append(header);
+
+        //  display temperature
+        var tempText = $("<h6>");
+        tempText.text("Temperature: " + weatherElem.temps[0] + "°F");
+        $("#current-cast").append(tempText);
+
+        //  display humidity
+        var humiText = $("<h6>");
+        humiText.text("Humidity: " + weatherElem.humiditys[0] + "%");
+        $("#current-cast").append(humiText);
+
+        // display windspeed
+        var windText = $("<h6>");
+        windText.text("Windspeed: " + weatherElem.winds[0] + "MPH");
+        $("#current-cast").append(windText);
+
+        // display uv index
+        // make a div with two separate h6 tags so that we can make only the number have a colored background
+        // I had a hard time trying to get the two separate elements on the same level, worked around using bootstrap columns
+        var uvText = $("<div>");
+        uvText.attr("class", "row");
+        var col1 = $("<div>");
+        var col2 = $("<div>");
+        col1.attr("class", "col-auto");
+        col2.attr("class", "col-auto");
+        var uvCat = $("<h6>");
+        var uvNum = $("<h6>");
+        col1.append(uvCat);
+        col2.append(uvNum);
+        uvText.append(col1);
+        uvText.append(col2);
+        uvCat.text("UV Index: ");
+        uvNum.text(weatherElem.uv);
+        console.log(weatherElem.uv);
+        col2.attr("id", ("uv" + Math.floor(weatherElem.uv/2)));
+        $("#current-cast").append(uvText);
+
+        // add weather cards to 5daycast
+        // starting at 1 because the 0th index object is displayed above differently
+        for (var i = 1; i < 6; i++){
+            // making a new column in our 5daycast row
+            var newCol = $("<div>");
+            newCol.attr("class", "col-2");
+
+        }
+
+
+
+
 
     }
 

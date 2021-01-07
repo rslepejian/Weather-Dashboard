@@ -5,3 +5,38 @@
 .btn-outline-secondary {
     margin-top: 10px;
 }
+
+.icon {
+    width: 60px;
+    height: 60px;
+}
+
+.float-left {
+    float: left;
+}
+
+#current-cast {
+    border-radius: 30px;
+    border: 1px solid grey;
+    padding: 20px;
+}
+
+#uv0{
+    background-color: green;
+}
+
+#uv1{
+    background-color: yellow;
+}
+
+#uv2{
+    background-color: orange;
+}
+
+#uv3{
+    background-color: red;
+}
+
+#uv4{
+    background-color: magenta;
+}
