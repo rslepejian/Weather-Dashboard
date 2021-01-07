@@ -65,6 +65,7 @@ $(document).ready(function () {
                     uv : 0
                 };
 
+                // temporary variables for the lattitude and longitude found in the first api call to be used in the second
                 longitude = response.city.coord.lon;
                 latitude = response.city.coord.lat;
 
