@@ -180,12 +180,60 @@ $(document).ready(function () {
         col2.attr("id", ("uv" + Math.floor(weatherElem.uv/2)));
         $("#current-cast").append(uvText);
 
+        var fiveDayHeader = $("<h2>");
+        fiveDayHeader.text("5 Day Forecast:");
+        $("#five-day-cast").append(fiveDayHeader);
+
         // add weather cards to 5daycast
         // starting at 1 because the 0th index object is displayed above differently
         for (var i = 1; i < 6; i++){
             // making a new column in our 5daycast row
             var newCol = $("<div>");
             newCol.attr("class", "col-2");
+
+            // add a bootstrap card to the column
+            var newCard = $("<div>");
+            newCard.attr("class", "card");
+
+            // add it to the column
+            newCol.append(newCard);
+           
+            // each card contains date, icon, temp, humidity
+            var dateLi = $("<h5>");
+            var tempDate = "";
+            // reformatting the date
+            for (var j = 0; j < 10; j++) {
+                if (weatherElem.dates[i][j] == "-") {
+                    tempDate += "/";
+                }
+                else {
+                    tempDate += weatherElem.dates[i][j];
+                }
+            }
+            // add the date to the card
+            dateLi.text(tempDate);
+            newCard.append(dateLi);
+            
+            // add the icon
+            var iconLi = $("<img>");
+            iconLi.attr("class", "icon");
+            var iconURL = "http://openweathermap.org/img/w/" + weatherElem.icons[i] + ".png";
+            iconLi.attr("src", iconURL);
+            newCard.append(iconLi);
+
+            // add the temp
+            var tempLi = $("<p>");
+            tempLi.text("Temperature: " + weatherElem.temps[0] + "°F");
+            newCard.append(tempLi);
+
+            // add the humidity
+            var humiLi = $("<p>");
+            humiLi.text("Humidity: " + weatherElem.humiditys[0] + "%");
+            newCard.append(humiLi);
+            
+
+            // add the column to the 5daycast row
+            $("#five-day-cast").append(newCol);
 
         }
 
