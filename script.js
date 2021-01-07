@@ -157,7 +157,7 @@ $(document).ready(function () {
 
         // display windspeed
         var windText = $("<h6>");
-        windText.text("Windspeed: " + weatherElem.winds[0] + "MPH");
+        windText.text("Windspeed: " + weatherElem.winds[0] + " MPH");
         $("#current-cast").append(windText);
 
         // display uv index
