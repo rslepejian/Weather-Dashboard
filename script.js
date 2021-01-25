@@ -48,6 +48,7 @@ $(document).ready(function () {
             //upon api response
             .then(function(response) {
                 // store relevant variables in an object and push it to weatherObjects
+                console.log(response);
                 var cityWeather = { 
                     // name
                     name: response.city.name, 
@@ -92,8 +93,6 @@ $(document).ready(function () {
                 newBtn.text(weatherObjects[weatherObjects.length-1].name);
                 $("#button-div").append(newBtn);
             });
-
-
     });
 
 
