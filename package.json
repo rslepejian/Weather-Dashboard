@@ -1,0 +1,19 @@
+{
+  "name": "weather-dashboard",
+  "version": "1.0.0",
+  "description": "This site uses openweathermap to allow users to enter a city and see a five day forecast for the cities temperature and humidity. If the user inputs another city the first city will be stored for their visit and they can click on the corresponding button to look at it again without having to type it out again.",
+  "main": "script.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rslepejian/Weather-Dashboard.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rslepejian/Weather-Dashboard/issues"
+  },
+  "homepage": "https://github.com/rslepejian/Weather-Dashboard#readme"
+}
